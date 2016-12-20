@@ -14,4 +14,25 @@ class AuthenticationController < ApplicationController
       redirect_to '/users/info'
     end
   end
+
+  def auth
+    url = URI.parse(ENV['API_AUTHENTICATION_URL'])
+    res = Net::HTTP.post_form(url, { email: auth_params[:email], password: auth_params[:password]})
+    if (res.code == '200')
+      body = JSON.parse(res.body)
+      session[:api_token] = body['token'] if (body['token'])
+      redirect_to '/users/info'
+    else
+      redirect_to '/auth/error'
+    end
+  end
+
+  private
+
+  def auth_params
+    params.permit(
+        :email,
+        :password
+    )
+  end
 end
