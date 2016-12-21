@@ -1,4 +1,4 @@
-require 'net/http'
+require 'httparty'
 
 class AuthenticationController < ApplicationController
   def facebook
@@ -7,20 +7,16 @@ class AuthenticationController < ApplicationController
 
   def facebook_return
     if (params[:code])
-      url = URI.parse(ENV['API_FACEBOOK_TOKEN_URL'])
-      res = Net::HTTP.post_form(url, { "code" => params[:code] })
-      body = JSON.parse(res.body)
-      session[:api_token] = body['token'] if (body['token'])
-      redirect_to '/users/info'
+      if (authenticate_facebook params[:code])
+        redirect_to '/users/info'
+      else
+        redirect_to '/auth/error'
+      end
     end
   end
 
-  def auth
-    url = URI.parse(ENV['API_AUTHENTICATION_URL'])
-    res = Net::HTTP.post_form(url, { email: auth_params[:email], password: auth_params[:password]})
-    if (res.code == '200')
-      body = JSON.parse(res.body)
-      session[:api_token] = body['token'] if (body['token'])
+  def authenticate
+    if (authenticate!(auth_params[:email], auth_params[:password]))
       redirect_to '/users/info'
     else
       redirect_to '/auth/error'
