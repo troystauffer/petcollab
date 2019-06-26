@@ -1,20 +1,7 @@
-require 'httparty'
+require 'petcollab_api/auth'
 
 class AuthenticationController < ApplicationController
-  def facebook
-    redirect_to ENV['FACEBOOK_AUTH_URL']
-  end
-
-  def facebook_return
-    if (params[:code])
-      if (authenticate_facebook params[:code])
-        redirect_to '/users/info'
-      else
-        redirect_to '/auth/error'
-      end
-    end
-  end
-
+  include PetcollabAPI::Auth
   def authenticate
     if (authenticate!(auth_params[:email], auth_params[:password]))
       redirect_to '/users/info'
@@ -26,9 +13,6 @@ class AuthenticationController < ApplicationController
   private
 
   def auth_params
-    params.permit(
-        :email,
-        :password
-    )
+    params.require(:auth).permit(:email, :password)
   end
 end

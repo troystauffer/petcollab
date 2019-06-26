@@ -1,7 +1,4 @@
-require 'PetcollabApi'
-
 class ApplicationController < ActionController::Base
-  include PetcollabAPI
   protect_from_forgery with: :exception
 
   def not_authorized

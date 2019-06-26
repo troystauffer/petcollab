@@ -1,22 +1,22 @@
 source 'https://rubygems.org'
 
 
-gem 'rails', '~> 5.0.0', '>= 5.0.0.1'
-gem 'pg', '~> 0.18'
-gem 'puma', '~> 3.0'
-gem 'sass-rails', '~> 5.0'
-gem 'uglifier', '>= 1.3.0'
-gem 'coffee-rails', '~> 4.2'
+gem 'rails', '~> 5.1'
+gem 'puma'
+gem 'sass-rails'
+gem 'uglifier'
+gem 'coffee-rails'
 gem 'jquery-rails'
-gem 'turbolinks', '~> 5'
-gem 'jbuilder', '~> 2.5'
+gem 'turbolinks'
+gem 'jbuilder'
 gem 'haml'
-gem 'httparty', '~> 0.13.7'
+gem 'httparty'
 
 # gem 'capistrano-rails', group: :development
 
 group :development, :test do
   gem 'dotenv-rails'
+  gem 'pry'
   gem 'byebug', platform: :mri
 end
 
