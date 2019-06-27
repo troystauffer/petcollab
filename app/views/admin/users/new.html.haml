@@ -1,0 +1,13 @@
+%h1 Create New User
+= form_tag admin_users_path do
+  %div
+    = label_tag "user[name]", "Full Name"
+    = text_field_tag "user[name]"
+  %div
+    = label_tag "user[email]", "Email Address"
+    = text_field_tag "user[email]"
+  %div
+    = label_tag "user[password]", "Password"
+    = password_field_tag "user[password]"
+  %div
+    = submit_tag "Create User"

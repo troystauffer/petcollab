@@ -1,0 +1,14 @@
+%h1 #{@users.length} Users
+%table
+  %tr
+    %th Name
+    %th Email
+    %th Role
+    %th Confirmed
+  - @users.each do |user|
+    %tr
+      %td= user["name"]
+      %td= user["email"]
+      %td= user["role"]["title"].humanize
+      %td= user["confirmed"]
+= link_to "Add New User", new_admin_user_path
