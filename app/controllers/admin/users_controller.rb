@@ -17,6 +17,15 @@ class Admin::UsersController < ApplicationController
     end
   end
 
+  def destroy
+    if destroy_user(params[:id])
+      flash[:success] = "User deleted."
+    else
+      flash[:error] = "An error occurred. The user was not deleted."
+    end
+    redirect_to admin_users_path
+  end
+
   private
 
   def user_params

@@ -6,6 +6,6 @@ Rails.application.routes.draw do
   get 'auth/error', to: 'authentication#error'
 
   namespace :admin do
-    resources :users, only: %i(index new create)
+    resources :users, only: %i(index new create destroy)
   end
 end

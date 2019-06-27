@@ -17,4 +17,9 @@ module PetcollabAPI::Users
     response = HTTParty.get("#{ENV['API_URL']}/admin/users", headers: { 'x-access-token' => session[:api_token] })
     self.process_response response
   end
+
+  def destroy_user(user_id)
+    response = HTTParty.delete("#{ENV['API_URL']}/admin/users/#{user_id}", headers: { 'x-access-token' => session[:api_token] })
+    self.process_response response
+  end
 end

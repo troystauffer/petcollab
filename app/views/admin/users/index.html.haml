@@ -5,10 +5,12 @@
     %th Email
     %th Role
     %th Confirmed
+    %th
   - @users.each do |user|
     %tr
       %td= user["name"]
       %td= user["email"]
       %td= user["role"]["title"].humanize
       %td= user["confirmed"]
+      %td= link_to "Delete", admin_user_path(user["id"]), data:{ confirm: "Delete this user? #{user["email"]}", method: "delete" }
 = link_to "Add New User", new_admin_user_path
