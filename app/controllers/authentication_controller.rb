@@ -3,10 +3,13 @@ require 'petcollab_api/auth'
 class AuthenticationController < ApplicationController
   include PetcollabAPI::Auth
   def authenticate
-    if (authenticate!(auth_params[:email], auth_params[:password]))
+    auth(auth_params[:email], auth_params[:password])
+    if (@api["success"])
       redirect_to '/users/info'
     else
-      redirect_to '/auth/error'
+      flash[:error] = "Login failed: "
+      @api["errors"].each { |e| flash[:error] += " #{e["msg"]}" }
+      redirect_to '/auth'
     end
   end
 

@@ -3,16 +3,22 @@ require 'petcollab_api/users'
 class Admin::UsersController < ApplicationController
   include PetcollabAPI::Users
 
+  before_action :set_user, only: %i(new create)
+
   def index
-    @users = users_list
+    users_list
+    @users = @api["response"]
   end
 
   def create
-    if user = create_user(user_params)
-      confirmation_token = user["confirmation_token"]
+    create_user(user_params)
+    if @api["success"]
+      confirmation_token = @api["response"]["confirmation_token"]
       flash[:success] = "User created successfully. Confirmation token: #{confirmation_token}"
       redirect_to admin_users_path
     else
+      flash[:error] = "User creation failed: "
+      @api["errors"].each { |e| flash[:error] += " #{e["msg"]}" }
       render :new
     end
   end
@@ -29,6 +35,10 @@ class Admin::UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:name, :email, :password)
+    params.permit(:name, :email, :password)
+  end
+
+  def set_user
+    @user = { name: user_params[:name], email: user_params[:email], password: user_params[:password] }
   end
 end
