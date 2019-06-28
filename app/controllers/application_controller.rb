@@ -8,4 +8,8 @@ class ApplicationController < ActionController::Base
   def check_api_token
     not_authorized if session[:api_token].nil?
   end
+
+  def super_admin_authorized
+    not_authorized unless session["role"] == "super_admin"
+  end
 end

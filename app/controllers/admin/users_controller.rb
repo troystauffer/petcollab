@@ -4,6 +4,7 @@ class Admin::UsersController < ApplicationController
   include PetcollabAPI::Users
 
   before_action :set_user, only: %i(new create)
+  before_action :super_admin_authorized
 
   def index
     users_list
