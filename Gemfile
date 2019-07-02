@@ -20,6 +20,10 @@ group :development, :test do
   gem 'byebug', platform: :mri
 end
 
+group :test do
+  gem "mocha"
+end
+
 group :development do
   gem 'web-console'
   gem 'listen', '~> 3.0.5'
